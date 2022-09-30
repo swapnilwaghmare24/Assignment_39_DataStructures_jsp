@@ -28,6 +28,8 @@ function calculateDailyWages(empHrs)
 {
     return empHrs*WAGE_PER_HOURS;
 }
+
+
 let empHrs=0;
 let numberOfDays=0;
 let empDailyWagesArr=new Array();
@@ -40,7 +42,38 @@ while(empHrs<MAX_WORKING_HOURS&&numberOfDays<MAX_WORKING_DAYS)
     totalEmpHours+=empHrs;
     empDailyWagesArr.push(calculateDailyWages(empHrs));
 }
+let totalEmpWage=0;
 
+function sum(dailyWages)
+{
+    totalEmpWage+=dailyWages;
+}
+empDailyWagesArr.forEach(sum);
+
+let dailyCount=0;
+function mapDayWithWage(dailyWages)
+{
+    dailyCount++;
+    return dailyCount+"="+dailyWages;
+}
+
+let mapDayWithWageArr=empDailyWagesArr.map(mapDayWithWage);
+console.log(mapDayWithWageArr);
+function fullTimeWage(dailyWages)
+{
+    return dailyWages.includes("160");
+}
+
+let fullDayWageArr=mapDayWithWageArr.filter(fullTimeWage);
+console.log("full day wage array :"+fullDayWageArr);
+function partTimeWage(dailyWages)
+{
+    return dailyWages.includes("80");
+}
+
+let partDayWageArr=mapDayWithWageArr.filter(partTimeWage);
+console.log("Half day wage array :"+partDayWageArr);
+console.log("total hours :"+totalEmpHours +" total working days :"+numberOfDays+" total employee wages :"+totalEmpWage);
 console.log("Number of Days "+numberOfDays);
 console.log("Number of hours "+totalEmpHours);
 let calWage=totalEmpHours*WAGE_PER_HOURS;
